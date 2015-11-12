@@ -9,23 +9,42 @@ import java.util.*;
 public class App 
 {
     public static void main( String[] args )
-    {
+    { Map<Integer,Map<Integer,Integer>> finalMap=new HashMap<Integer, Map<Integer, Integer>>();
        DataReader dataReader=new DataReader();
         List<PowerBallResult> powerBallResults = dataReader.readerDataFromCSV("src/test/resources/Powerball.csv");
         for(int i=1;i<=7;i++) {
-            System.out.println("Position:"+i);
             Map<Integer, Integer> repeatedNumbersWithCount = getRepeatedNumbersWithCount(powerBallResults, i);
-            printMap(sortByValue(repeatedNumbersWithCount));
+
+           finalMap.put(i,sortByValue(repeatedNumbersWithCount));
+//            System.out.println("Position :"+i);
+//            printMap(sortByValue(repeatedNumbersWithCount));
+        }
+        for(int i=1;i<8;i++) {
+            printGuess(finalMap, i);
         }
 
+
     }
-    public static void printMap(Map mp) {
+
+    private static void printGuess(Map<Integer, Map<Integer, Integer>> finalMap, int i) {
+        System.out.print("Guessed Number:");
+        Iterator it=finalMap.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            Map<Integer,Integer> map = (Map<Integer, Integer>) pair.getValue();
+            List<Integer> indexMap=new ArrayList<Integer>(map.keySet());
+            System.out.print(indexMap.get(i-1) + " ");
+        }
+        System.out.println("\n");
+    }
+
+    public static void printMap(Map mp ) {
         Iterator it = mp.entrySet().iterator();
         int i=1;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(i+++":Number "+pair.getKey() + " appeared " + pair.getValue()+" times");
-            it.remove(); // avoids a ConcurrentModificationException
+            System.out.println(i++ + ":Number " + pair.getKey() + " appeared " + pair.getValue() + " times");
+
         }
     }
     public static Map sortByValue(Map unsortedMap) {
@@ -39,10 +58,12 @@ public class App
         for(PowerBallResult result:powerBallResults){
 
                 int value = getMethod(result,i);
-                if(countMap.containsKey(value)){
-                    countMap.put(value,countMap.get(value)+1);
-                }else{
-                    countMap.put(value,1);
+                if(value>0) {
+                    if (countMap.containsKey(value)) {
+                        countMap.put(value, countMap.get(value) + 1);
+                    } else {
+                        countMap.put(value, 1);
+                    }
                 }
         }
         return countMap;
