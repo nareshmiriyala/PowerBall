@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by nareshm on 12/11/2015.
  */
 public class PowerBallResult {
-    private long id;
+    private int id;
     private Date drawDate;
     private int numberOne;
     private int numberTwo;
@@ -27,7 +27,7 @@ public class PowerBallResult {
     public PowerBallResult(){
 
     }
-    public PowerBallResult(long id, Date drawDate, int numberOne, int numberTwo, int numberThree, int numberFour, int numberFive, int numberSix, int powerBall) {
+    public PowerBallResult(int id, Date drawDate, int numberOne, int numberTwo, int numberThree, int numberFour, int numberFive, int numberSix, int powerBall) {
         this.id = id;
         this.drawDate = drawDate;
         this.numberOne = numberOne;
@@ -39,11 +39,11 @@ public class PowerBallResult {
         this.powerBall = powerBall;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -193,17 +193,6 @@ public class PowerBallResult {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = numberOne;
-        result = 31 * result + numberTwo;
-        result = 31 * result + numberThree;
-        result = 31 * result + numberFour;
-        result = 31 * result + numberFive;
-        result = 31 * result + numberSix;
-        result = 31 * result + powerBall;
-        return result;
-    }
 
     @Override
     public String toString() {

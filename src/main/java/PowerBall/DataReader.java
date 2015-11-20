@@ -44,7 +44,7 @@ public class DataReader {
 
     private PowerBallResult createPowerBallRecord(CSVRecord record) {
         PowerBallResult powerBallResult=new PowerBallResult();
-        powerBallResult.setId(Long.parseLong(record.get(0)));
+        powerBallResult.setId(Integer.parseInt(record.get(0)));
         powerBallResult.setDrawDate(parsedDate(record.get(1)));
 
             powerBallResult.setNumberOne(Integer.parseInt(getParsedRecord(record,2)));
