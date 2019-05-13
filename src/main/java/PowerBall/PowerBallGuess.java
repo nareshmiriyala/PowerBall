@@ -5,14 +5,14 @@ import java.util.*;
 /**
  * Created by nmiriyal on 4/02/2016.
  */
-public class PowerBallGuess {
+class PowerBallGuess {
     public static void main(String[] args) {
-        Map<Integer, Map<Integer, Integer>> finalMap = new HashMap<Integer, Map<Integer, Integer>>();
+        Map<Integer, Map<Integer, Integer>> finalMap = new HashMap<>();
         DataReader dataReader = new DataReader();
         List<PowerBallResult> powerBallResults = dataReader.readerDataFromCSV("src/test/resources/Powerball.csv");
-        Map<Integer,Integer> firstDivisionCounts=new HashMap<Integer, Integer>();
+        Map<Integer,Integer> firstDivisionCounts= new HashMap<>();
         for(PowerBallResult result:powerBallResults){
-            for(int i=1;i<=6;i++){
+            for(int i=1;i<=8;i++){
                 int value=getMethod(result,i);
                 if (value > 0) {
 
@@ -26,9 +26,9 @@ public class PowerBallGuess {
         }
         System.out.println(firstDivisionCounts.size());
         System.out.println(sortByValue(firstDivisionCounts));
-        Map<Integer,Integer> secondDivision=new HashMap<Integer, Integer>();
+        Map<Integer,Integer> secondDivision= new HashMap<>();
         for(PowerBallResult result:powerBallResults){
-                int value=getMethod(result,7);
+                int value=result.getPowerBall();
                 if (value > 0) {
 
                     if (secondDivision.containsKey(value)) {
@@ -39,19 +39,15 @@ public class PowerBallGuess {
             }
         }
         System.out.println(secondDivision.size());
+
         System.out.println(sortByValue(secondDivision));
 
     }
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
+        list.sort((o1, o2) -> (o2.getValue()).compareTo(o1.getValue()));
 
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        Map<K, V> result = new LinkedHashMap<K, V>();
+        Map<K, V> result = new LinkedHashMap<>();
         for (Map.Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
@@ -72,6 +68,8 @@ public class PowerBallGuess {
             case 6:
                 return result.getNumberSix();
             case 7:
+                return result.getNumberSeven();
+            case 8:
                 return result.getPowerBall();
         }
         return 0;

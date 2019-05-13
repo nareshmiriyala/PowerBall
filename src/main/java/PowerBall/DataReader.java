@@ -1,27 +1,27 @@
 package PowerBall;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  * Created by nareshm on 12/11/2015.
  */
-public class DataReader {
+class DataReader {
 
     public List<PowerBallResult> readerDataFromCSV(String path){
         Reader in = null;
-        List<PowerBallResult> powerBallResults=new ArrayList<PowerBallResult>();
+        List<PowerBallResult> powerBallResults = new ArrayList<>();
         try {
             in = new FileReader(path);
         } catch (FileNotFoundException e) {
@@ -29,11 +29,11 @@ public class DataReader {
         }
         Iterable<CSVRecord> records = null;
         try {
-            records = CSVFormat.EXCEL.parse(in);
+            records = CSVFormat.EXCEL.parse(Objects.requireNonNull(in));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (CSVRecord record : records) {
+        for (CSVRecord record : Objects.requireNonNull(records)) {
             if(record.getRecordNumber()==1){
                 continue;
             }
@@ -44,23 +44,16 @@ public class DataReader {
 
     private PowerBallResult createPowerBallRecord(CSVRecord record) {
         PowerBallResult powerBallResult=new PowerBallResult();
-        powerBallResult.setId(Integer.parseInt(record.get(0)));
-        powerBallResult.setDrawDate(parsedDate(record.get(1)));
+        powerBallResult.setDrawDate(parsedDate(record.get(0)));
 
-            powerBallResult.setNumberOne(Integer.parseInt(getParsedRecord(record,2)));
-            powerBallResult.setNumberTwo(Integer.parseInt(getParsedRecord(record,3)));
-            powerBallResult.setNumberThree(Integer.parseInt(getParsedRecord(record,4)));
-            powerBallResult.setNumberFour(Integer.parseInt(getParsedRecord(record,5)));
-            powerBallResult.setNumberFive(Integer.parseInt(getParsedRecord(record,6)));
-            powerBallResult.setNumberSix(Integer.parseInt(getParsedRecord(record,7)));
-            powerBallResult.setPowerBall(Integer.parseInt(getParsedRecord(record,8)));
-            powerBallResult.setDivisionOneMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,9))));
-            powerBallResult.setDivisionTwoMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,10))));
-            powerBallResult.setDivisionThreeMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,11))));
-            powerBallResult.setDivisionFourMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,12))));
-            powerBallResult.setDivisionFiveMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,13))));
-            powerBallResult.setDivisionSixMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,14))));
-            powerBallResult.setDivisionSevenMoney(BigDecimal.valueOf(Double.parseDouble(getParsedRecord(record,15))));
+        powerBallResult.setNumberOne(Integer.parseInt(getParsedRecord(record, 1)));
+        powerBallResult.setNumberTwo(Integer.parseInt(getParsedRecord(record, 2)));
+        powerBallResult.setNumberThree(Integer.parseInt(getParsedRecord(record, 3)));
+        powerBallResult.setNumberFour(Integer.parseInt(getParsedRecord(record, 4)));
+        powerBallResult.setNumberFive(Integer.parseInt(getParsedRecord(record, 5)));
+        powerBallResult.setNumberSix(Integer.parseInt(getParsedRecord(record, 6)));
+        powerBallResult.setNumberSeven(Integer.parseInt(getParsedRecord(record, 7)));
+        powerBallResult.setPowerBall(Integer.parseInt(getParsedRecord(record, 8)));
 
         return powerBallResult;
     }
@@ -77,7 +70,7 @@ public class DataReader {
     }
 
     private Date parsedDate(String inDate){
-        SimpleDateFormat fromUser = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
 
