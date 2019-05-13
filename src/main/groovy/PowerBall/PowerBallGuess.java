@@ -8,8 +8,8 @@ import java.util.*;
 class PowerBallGuess {
     public static void main(String[] args) {
         Map<Integer, Map<Integer, Integer>> finalMap = new HashMap<>();
-        DataReader dataReader = new DataReader();
-        List<PowerBallResult> powerBallResults = dataReader.readerDataFromCSV("src/test/resources/Powerball.csv");
+        PowerBallDataReader powerBallDataReader = new PowerBallDataReader();
+        List<PowerBallResult> powerBallResults = powerBallDataReader.readerDataFromCSV("src/test/resources/Powerball.csv");
         Map<Integer,Integer> firstDivisionCounts= new HashMap<>();
         for(PowerBallResult result:powerBallResults){
             for(int i=1;i<=8;i++){

@@ -17,11 +17,11 @@ import org.apache.commons.csv.CSVRecord;
 /**
  * Created by nareshm on 12/11/2015.
  */
-class DataReader {
+class OzLottoDataReader {
 
-    public List<PowerBallResult> readerDataFromCSV(String path){
+    public List<OzLottoResult> readerDataFromCSV(String path){
         Reader in = null;
-        List<PowerBallResult> powerBallResults = new ArrayList<>();
+        List<OzLottoResult> ozResults = new ArrayList<>();
         try {
             in = new FileReader(path);
         } catch (FileNotFoundException e) {
@@ -37,25 +37,26 @@ class DataReader {
             if(record.getRecordNumber()==1){
                 continue;
             }
-           powerBallResults.add(createPowerBallRecord(record));
+           ozResults.add(createOzLottoRecord(record));
         }
-        return powerBallResults;
+        return ozResults;
     }
 
-    private PowerBallResult createPowerBallRecord(CSVRecord record) {
-        PowerBallResult powerBallResult=new PowerBallResult();
-        powerBallResult.setDrawDate(parsedDate(record.get(0)));
+    private OzLottoResult createOzLottoRecord(CSVRecord record) {
+        OzLottoResult ozResult=new OzLottoResult();
+        ozResult.setDrawDate(parsedDate(record.get(0)));
 
-        powerBallResult.setNumberOne(Integer.parseInt(getParsedRecord(record, 1)));
-        powerBallResult.setNumberTwo(Integer.parseInt(getParsedRecord(record, 2)));
-        powerBallResult.setNumberThree(Integer.parseInt(getParsedRecord(record, 3)));
-        powerBallResult.setNumberFour(Integer.parseInt(getParsedRecord(record, 4)));
-        powerBallResult.setNumberFive(Integer.parseInt(getParsedRecord(record, 5)));
-        powerBallResult.setNumberSix(Integer.parseInt(getParsedRecord(record, 6)));
-        powerBallResult.setNumberSeven(Integer.parseInt(getParsedRecord(record, 7)));
-        powerBallResult.setPowerBall(Integer.parseInt(getParsedRecord(record, 8)));
+        ozResult.setNumberOne(Integer.parseInt(getParsedRecord(record, 1)));
+        ozResult.setNumberTwo(Integer.parseInt(getParsedRecord(record, 2)));
+        ozResult.setNumberThree(Integer.parseInt(getParsedRecord(record, 3)));
+        ozResult.setNumberFour(Integer.parseInt(getParsedRecord(record, 4)));
+        ozResult.setNumberFive(Integer.parseInt(getParsedRecord(record, 5)));
+        ozResult.setNumberSix(Integer.parseInt(getParsedRecord(record, 6)));
+        ozResult.setNumberSeven(Integer.parseInt(getParsedRecord(record, 7)));
+        ozResult.setSupplOne(Integer.parseInt(getParsedRecord(record, 8)));
+        ozResult.setSuppTwo(Integer.parseInt(getParsedRecord(record, 9)));
 
-        return powerBallResult;
+        return ozResult;
     }
 
     private String getParsedRecord(CSVRecord record,int number) {

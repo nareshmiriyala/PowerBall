@@ -16,6 +16,7 @@ class PowerBallResult {
     private int numberSix;
     private int numberSeven;
     private int powerBall;
+
     public PowerBallResult(){
 
     }
